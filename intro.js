@@ -1,1 +1,6 @@
 
+let listaParticipantes =[];
+
+const objparticipante ={
+    
+}
