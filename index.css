@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+.navbar navbar-expand-lg bg-body-tertiary{
+    background-color: black;
+}
+
+.internacional{
+    text-align: center;
+    flex-wrap: wrap;
+    position: relative; top: 150px;
+}
+
+.mundial{
+    text-align: center;
+    flex-wrap: wrap;
+    position: relative; top: 50px;
+}
+
+.cuerpo{
+    position: relative; top: 0px;
+    width: 1400px;
+    height: 600px;
+    margin: 0;
+}
+
+.futbolin{
+    width: 1500px;
+}
+
+.encuentro{
+    color: white;
+    position: relative; top: 200px;
+    text-align: left;
+    opacity: 70%;
+    margin-right: auto;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+.registro{
+    text-align: center;
+    flex-wrap: wrap;
+    padding: 40px;
+
+}
+
+/* ESTILOS DEL FORMULARIO */
+
+.contenedor{
+    width: 100%;
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor .div-formulario{
+    width: 30%;
+    height: 250px;
+    margin: 15px 15px;
+    background-color: rgb (135,132,132);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 10px 10px rgb (0,0,0,0.3);
+}
+
+.contenedor .div-formulario h2{
+    position: relative; top: 0;
+    font-weight: 300;
+    font-size: 2em;
+    color: black;
+}
+
+.contenedor .div-formulario form{
+    position: relative; top: 100px;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor .div-formulario form input,
+.contenedor .div-formulario form button{
+    width: 60%;
+    padding: 10px 10px;
+    margin: 10px 10px;
+}
+
+/* ESTILOS DE LISTADO */
+.contenedor .div-listado{
+    width: 55%;
+    height: calc(100% - 50%);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    margin-bottom: 100px;
+
+}
