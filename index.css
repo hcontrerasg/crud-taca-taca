@@ -154,3 +154,108 @@ hr {
     background-color: red;
 }
 
+.pie-pagina{
+    width: 1510px;
+    background-color: darkslategray;
+    background-size: cover;
+    height: 300px;
+    display:flex;
+    flex-wrap: wrap;
+    position: relative; top: 50px
+}
+
+.logo-pie{
+    width: 300px;
+    height: 200px;
+    margin-left: 0px;
+    flex-wrap: wrap;
+    padding: 40px;
+}
+
+.herramientas{
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    position: relative; top: 130px;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.donde{
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    font-family: 'Amaranth', sans-serif;
+    flex-wrap: wrap;
+}
+
+.nuestras{
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    font-family: 'Amaranth', sans-serif;
+    flex-wrap: wrap;
+}
+
+.asesoramos{
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    font-family: 'Amaranth', sans-serif;
+    flex-wrap: wrap;
+}
+
+.siguenos{
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    font-family: 'Amaranth', sans-serif;
+    position: relative; top: 110px;
+    margin-left: 100px;
+    font-size: xx-large;
+    flex-wrap: wrap;
+}
+
+.red-social{
+    position: relative; top: 130px; right: 10px;
+    margin-right: 10px;
+    flex-wrap: wrap;
+
+}
+
+.grupo2{
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    font-family: 'Amaranth', sans-serif;
+    flex-wrap: wrap;
+}
+
+.fa-facebook{
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    flex-wrap: wrap;
+}
+
+.fa-instagram{
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    flex-wrap: wrap;
+}
+
+.fa-twitter{
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    flex-wrap: wrap;
+}
+
+.fa-youtube{
+    color: white;
+    padding: 15px;
+    text-decoration: none;
+    flex-wrap: wrap;
+}
