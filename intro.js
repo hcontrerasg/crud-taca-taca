@@ -80,7 +80,7 @@ listaParticipantes.forEach(participante => {
     parrafo.append(editarBoton);
 
     const eliminarBoton =document.createElement("button");
-    editarBoton.onclick = () => cargarParticipante(participante);
+    editarBoton.onclick = () => eliminarParticipante(id);
     eliminarBoton.textContent ="Eliminar";
     eliminarBoton.classList.add("btn","btn-eliminar");
     parrafo.append(eliminarBoton);
@@ -101,11 +101,19 @@ nombreInput.value =nombre;
 puestoInput.value =puesto;
 pais.value=pais;
 
-objEmpleado.id =id;
+objparticipante.id =id;
 
 formulario.querySelector(`button[type="submit"]`).textContent = "actualizar";
 
 editando = true;
+}
+
+function eliminarParticipante (id) {
+
+    listaParticipantes = listaParticipantes.filter(participante => participante.id !== id);
+
+    limpiarHTML();
+    mostrarParticipantes();
 }
 
 function editarParticipante () {
@@ -115,13 +123,22 @@ function editarParticipante () {
 
     listaParticipantes.map( empleado => {
     
-        if (participante.id===objparticipante.id){
-            participante.id= objparticipante.id;
-            participante.nombre =objparticipante.nombre;
-            participante.puesto = objparticipante.puesto;
-            participante.pais = objparticipante.pais;
+        if (objparticipante.id===objparticipante.id){
+            objparticipante.id= objparticipante.id;
+            objparticipante.nombre =objparticipante.nombre;
+            objparticipante.puesto = objparticipante.puesto;
+            objparticipante.pais = objparticipante.pais;
         }
     })
+
+    limpiarHTML();
+    mostrarParticipantes();
+
+    formulario.reset();
+
+    formulario.querySelector(`button[type="submit"]`).textContent = "Agregar";
+
+    editando =false;
 }
 
     function limpiarHTML(){
@@ -131,5 +148,17 @@ function editarParticipante () {
 
     }
 }
+
+    function myfunc (event){
+        event.preventDefault();
+
+        let nombre=document.getElementById("nombre").value;
+        let puesto=document.getElementById("puesto").value;
+        let pais=document.getElementById("pais").value;
+
+        localStorage.setItem("ls_nombre",nombre);
+        localStorage.setItem("ls_puesto",puesto);
+        localStorage.setItem("ls_pais",pais);
+    }
 
 
