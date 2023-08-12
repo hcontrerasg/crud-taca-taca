@@ -74,7 +74,7 @@ listaParticipantes.forEach(participante => {
     parrafo.dataset.id =id;
 
     const editarBoton =document.createElement("button");
-    editarBoton.onclick = () => cargarParticipante(participante);
+    editarBoton.onclick = () => editarParticipante(participante);
     editarBoton.textContent ="Editar";
     editarBoton.classList.add("btn","btn-editar");
     parrafo.append(editarBoton);
@@ -121,7 +121,7 @@ function editarParticipante () {
     objparticipante.puesto=puestoInput.value;
     objparticipante.pais=paisInput.value;
 
-    listaParticipantes.map( empleado => {
+    listaParticipantes.map(participante => {
     
         if (objparticipante.id===objparticipante.id){
             objparticipante.id= objparticipante.id;
