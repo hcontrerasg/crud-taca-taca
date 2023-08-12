@@ -1,164 +1,127 @@
+const formSelect = document.querySelector('#formSelect');
+const nameInput = document.querySelector('#nameInput');
+const positionInput = document.querySelector('#positionInput');
+const countryInput = document.querySelector('#countryInput');
+const editInput = document.querySelector('#editInput');
+const idInput = document.querySelector('#idInput');
+const submitButton = document.querySelector('#submitButton');
+const contentParticipants = document.querySelector('.div-participants');
 
-let listaParticipantes =[];
-const objparticipante = {
-    id:""
-    ,nombre: ""
-    ,puesto: ""
-    ,pais: ""
-};
-
-let editando = false;
-
-const formulario = document.querySelector("#formulario");
-const nombreInput = document.querySelector("#nombre");
-const puestoInput = document.querySelector("#puesto");
-const paisInput = document.querySelector("#pais");
-const btnAgregar = document.querySelector("#btnAgregar");
-
-formulario.addEventListener("submit", validarFormulario);
-
-function validarFormulario (e) {
+formSelect.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    //resto del codigo de validación
-
-    if (nombreInput.value ===""|| puestoInput.value === ""||paisInput.value===""){
-        alert("Todos los campos son obligatorios.");
+    if (nameInput.value === '' || positionInput.value === '' || countryInput.value === '') {
+        alert('Todos los campos son obligatorios.');
         return;
+    }
+
+    if (editInput.value === '0') {
+        newParticipant();
+    } else {
+        updateParticipant();
+    }
+
+    displayParticipants();
+    clearForm();
+});
+
+
+function newParticipant() {
+    let localParticipants = JSON.parse(localStorage.getItem('listparticipants')) || [];
+
+    const participant = {
+        id: Date.now(),
+        name: nameInput.value,
+        position: positionInput.value,
+        country: countryInput.value,
+    };
+
+    localParticipants.push(participant);
+    localStorage.setItem('listparticipants', JSON.stringify(localParticipants));
 }
 
-if (editando) {
-    editarParticipante ();
-    editando =false;
-} else {
-    objparticipante.id = Date.now();
-    objparticipante.nombre = nombreInput.value;
-    objparticipante.puesto = puestoInput.value;
-    objparticipante.pais = paisInput.value;
+function updateParticipant() {
+    const participant = {
+        name: nameInput.value,
+        position: positionInput.value,
+        country: countryInput.value,
+    };
 
-    agregarParticipante();
+    let listParticipants = JSON.parse(localStorage.getItem('listparticipants')) || [];
+    const index = listParticipants.findIndex((participante) => participante.id === parseInt(idInput.value));
 
+    if (index !== -1) {
+        listParticipants[index] = { ...listParticipants[index], ...participant };
+        localStorage.setItem('listparticipants', JSON.stringify(listParticipants));
     }
 }
 
-function agregarParticipante() {
-    listaParticipantes.push({...objparticipante
+function delParticipant(event, id) {
+    event.preventDefault();
+
+    const confirmacion = window.confirm('¿Estás seguro de que quieres eliminar este registro?');
+    if (!confirmacion) {
+        return;
+    }
+
+    let listParticipants = JSON.parse(localStorage.getItem('listparticipants')) || [];
+    const index = listParticipants.findIndex((participante) => participante.id === id);
+
+    if (index !== -1) {
+        listParticipants.splice(index, 1);
+        localStorage.setItem('listparticipants', JSON.stringify(listParticipants));
+    }
+
+    displayParticipants();
+    clearForm();
+}
+
+function editParticipants(event, id) {
+    event.preventDefault();
+
+    let listParticipants = JSON.parse(localStorage.getItem('listparticipants')) || [];
+    const participant = listParticipants.find((participante) => participante.id === id);
+
+    if (participant) {
+        const { name, position, country } = participant;
+
+        nameInput.value = name;
+        positionInput.value = position;
+        countryInput.value = country;
+        editInput.value = '1';
+        idInput.value = id;
+
+        submitButton.innerText = 'Editar';
+    }
+}
+
+function displayParticipants() {
+    let listParticipants = JSON.parse(localStorage.getItem('listparticipants')) || [];
+
+    const participantsHTML = listParticipants.map((participant) => {
+        return `${participant.name} ${participant.position} ${participant.country} <a href="#" data-id="${participant.id}" class="edit-link">Editar</a> <a href="#" data-id="${participant.id}" class="delete-link">Eliminar</a><br>`;
     });
 
-    mostrarParticipantes();
+    contentParticipants.innerHTML = participantsHTML.join('');
 
-    formulario.reset();
+    const editLinks = document.querySelectorAll('.edit-link');
+    editLinks.forEach((link) => {
+        link.addEventListener('click', (e) => editParticipants(e, parseInt(link.getAttribute('data-id'))));
+    });
 
-    limpiarObjeto();
+    const deleteLinks = document.querySelectorAll('.delete-link');
+    deleteLinks.forEach((link) => {
+        link.addEventListener('click', (e) => delParticipant(e, parseInt(link.getAttribute('data-id'))));
+    });
 }
 
-function limpiarObjeto() {
-    objparticipante.id="";
-    objparticipante.nombre="";
-    objparticipante.puesto="";
-    objparticipante.pais="";
+function clearForm() {
+    editInput.value = '0';
+    idInput.value = '0';
+    submitButton.innerText = 'Agregar';
+    formSelect.reset();
 }
 
-function mostrarParticipantes() {
-    limpiarHTML();
-
-    const divParticipantes = document.querySelector(".div-participantes");
-
-listaParticipantes.forEach(participante => {
-    const {
-        id, nombre, puesto,pais
-    } = participante;
-
-    const parrafo = document.createElement ("p");
-    parrafo.textContent = `${id} - ${nombre} - ${puesto} - ${pais} -`; 
-    parrafo.dataset.id =id;
-
-    const editarBoton =document.createElement("button");
-    editarBoton.onclick = () => editarParticipante(participante);
-    editarBoton.textContent ="Editar";
-    editarBoton.classList.add("btn","btn-editar");
-    parrafo.append(editarBoton);
-
-    const eliminarBoton =document.createElement("button");
-    editarBoton.onclick = () => eliminarParticipante(id);
-    eliminarBoton.textContent ="Eliminar";
-    eliminarBoton.classList.add("btn","btn-eliminar");
-    parrafo.append(eliminarBoton);
-
-    const hr = document.createElement("hr");
-
-    divParticipantes.appendChild(parrafo);
-    divParticipantes.appendChild(hr);
-
+document.addEventListener('DOMContentLoaded', () => {
+    displayParticipants();
 });
-}
-
-
-function cargarParticipante(participante){
-const {id, nombre, puesto,pais} = participante;
-
-nombreInput.value =nombre;
-puestoInput.value =puesto;
-pais.value=pais;
-
-objparticipante.id =id;
-
-formulario.querySelector(`button[type="submit"]`).textContent = "actualizar";
-
-editando = true;
-}
-
-function eliminarParticipante (id) {
-
-    listaParticipantes = listaParticipantes.filter(participante => participante.id !== id);
-
-    limpiarHTML();
-    mostrarParticipantes();
-}
-
-function editarParticipante () {
-    objparticipante.nombre=nombreInput.value;
-    objparticipante.puesto=puestoInput.value;
-    objparticipante.pais=paisInput.value;
-
-    listaParticipantes.map(participante => {
-    
-        if (objparticipante.id===objparticipante.id){
-            objparticipante.id= objparticipante.id;
-            objparticipante.nombre =objparticipante.nombre;
-            objparticipante.puesto = objparticipante.puesto;
-            objparticipante.pais = objparticipante.pais;
-        }
-    })
-
-    limpiarHTML();
-    mostrarParticipantes();
-
-    formulario.reset();
-
-    formulario.querySelector(`button[type="submit"]`).textContent = "Agregar";
-
-    editando =false;
-}
-
-    function limpiarHTML(){
-    const divEmpleados = document.querySelector(".div-participantes");
-    while(listaParticipantes.firstchild) {
-        listaParticipantes.removeChild(divEmpleados.firstchild);
-
-    }
-}
-
-    function myfunc (event){
-        event.preventDefault();
-
-        let nombre=document.getElementById("nombre").value;
-        let puesto=document.getElementById("puesto").value;
-        let pais=document.getElementById("pais").value;
-
-        localStorage.setItem("ls_nombre",nombre);
-        localStorage.setItem("ls_puesto",puesto);
-        localStorage.setItem("ls_pais",pais);
-    }
-
-
