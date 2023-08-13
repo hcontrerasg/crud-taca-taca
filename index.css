@@ -34,16 +34,21 @@
 
 .futbolin{
     width: 1500px;
+   
 }
 
 .encuentro{
     color: white;
     position: relative; top: 200px;
     text-align: left;
-    opacity: 70%;
     margin-right: auto;
     padding: 40px;
     flex-wrap: wrap;
+}
+
+.mejores{
+    margin-left: 60px;
+    position: relative; top: 20px;
 }
 
 .registro{
